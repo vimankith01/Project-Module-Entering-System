@@ -5,7 +5,8 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 // const userRoutes = require('./routes/users');
 const authRoutes = require("./routes/Auth");
-const { default: validateToken } = require('./middleware/JwtValidation');
+// const { default: validateToken } = require('./middleware/JwtValidation');
+const validateToken = require('./middleware/JwtValidation');
 
 
 //middlewares
@@ -15,6 +16,12 @@ app.use(cors());
 //routes
 // app.use("/api/users", userRoutes);
 app.use("/api/auth",validateToken, authRoutes);
+
+
+// Use the validateToken middleware for protected routes
+app.get('/protected', validateToken, (req, res) => {
+  res.send('You are authenticated!');
+});
 
 const port = process.env.PORT || 8080;
 // app.listen(port, () => {
