@@ -1,6 +1,6 @@
-const jwt = require("jsonwebtoken")
+const jwt = require("jsonwebtoken");
 
-export default function validateToken(req, res, next) {
+function validateToken(req, res, next) {
   const authHeader = req.headers["authorization"];
 
   if (!authHeader) {
@@ -16,8 +16,10 @@ export default function validateToken(req, res, next) {
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded;
+    next();
   } catch (err) {
     return res.status(401).send("Invalid Token");
   }
-  return next();
 }
+
+module.exports = validateToken;
