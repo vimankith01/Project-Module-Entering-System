@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken")
-
+//comment from bimantha
 export default function validateToken(req, res, next) {
   const authHeader = req.headers["authorization"];
 
